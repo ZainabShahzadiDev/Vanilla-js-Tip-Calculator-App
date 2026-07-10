@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Splitter</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#C5E4E7;
+    --card:#FFFFFF;
+    --input-bg:#F3F8FB;
+    --dark:#00474B;
+    --accent:#24C2AD;
+    --accent-hover:#9FE8DF;
+    --title-color:#3A5C5D;
+    --label-color:#6B7D7F;
+    --error:#D4735F;
+    --error-bg:#FDECE6;
+    --focus-border:#4FC9BE;
+    --disabled-btn:#8FB8B8;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    min-height:100vh;
+    background:var(--bg);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family:'Space Mono', monospace;
+    padding:40px 16px;
+  }
+  .app{width:920px; max-width:100%;}
+  .title{
+    text-align:center;
+    font-weight:700;
+    font-size:28px;
+    letter-spacing:10px;
+    color:var(--title-color);
+    line-height:1.25;
+    margin-bottom:40px;
+  }
+  .card{
+    background:var(--card);
+    border-radius:24px;
+    box-shadow:0 30px 60px -20px rgba(0,71,75,0.25);
+    display:flex;
+    gap:32px;
+    padding:40px;
+  }
+  .left{flex:1; display:flex; flex-direction:column; gap:28px;}
+  label{
+    display:flex;
+    justify-content:space-between;
+    font-size:13px;
+    color:var(--label-color);
+    margin-bottom:8px;
+    font-weight:400;
+  }
+  .error-text{color:var(--error); font-weight:700;}
+  .field{
+    position:relative;
+    background:var(--input-bg);
+    border-radius:8px;
+    border:2px solid transparent;
+  }
+  .field.error{background:var(--error-bg); border-color:var(--error);}
+  .field.focus{border-color:var(--focus-border);}
+  .field input{
+    width:100%;
+    background:transparent;
+    border:none;
+    outline:none;
+    font-family:'Space Mono', monospace;
+    font-weight:700;
+    font-size:22px;
+    color:var(--dark);
+    text-align:right;
+    padding:14px 20px 14px 42px;
+  }
+  .field input::placeholder{color:#c3cfd2; font-weight:400;}
+  .field .icon{
+    position:absolute;
+    left:16px; top:50%;
+    transform:translateY(-50%);
+    color:#9fb4b6;
+    font-size:18px;
+    pointer-events:none;
+  }
+  .tip-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:12px;
+  }
+  .tip-btn{
+    background:var(--dark);
+    color:#fff;
+    border:none;
+    border-radius:8px;
+    padding:16px 0;
+    font-family:'Space Mono', monospace;
+    font-weight:700;
+    font-size:20px;
+    cursor:pointer;
+    transition:background .15s ease;
+  }
+  .tip-btn:hover{background:#0a5b60;}
+  .tip-btn.active{background:var(--accent); color:var(--dark);}
+  .tip-btn.custom-input{
+    background:var(--input-bg);
+    color:var(--dark);
+    text-align:center;
+    padding:0;
+  }
+  .tip-btn.custom-input input{
+    width:100%; height:100%;
+    background:transparent;
+    border:none; outline:none;
+    text-align:center;
+    font-family:'Space Mono', monospace;
+    font-weight:700;
+    font-size:20px;
+    color:var(--dark);
+    padding:16px 8px;
+  }
+  .tip-btn.custom-input input::placeholder{color:#9fb4b6; font-weight:700;}
+  .tip-btn.custom-input.focus{outline:2px solid var(--focus-border); outline-offset:-2px;}
+
+  .right{
+    width:380px;
+    background:var(--dark);
+    border-radius:16px;
+    padding:32px;
+    display:flex;
+    flex-direction:column;
+    color:#fff;
+  }
+  .amount-row{display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:28px;}
+  .amount-row .lbl-main{font-size:15px; font-weight:700;}
+  .amount-row .lbl-sub{font-size:12px; color:#9fc6c6; margin-top:2px;}
+  .amount-row .val{font-size:34px; font-weight:700; color:var(--accent); white-space:nowrap;}
+  .amount-row .val .cur{font-size:22px; margin-right:2px;}
+  .spacer{flex:1;}
+  .reset-btn{
+    margin-top:24px;
+    width:100%;
+    padding:16px 0;
+    border:none;
+    border-radius:8px;
+    background:var(--disabled-btn);
+    color:var(--dark);
+    font-family:'Space Mono', monospace;
+    font-weight:700;
+    font-size:15px;
+    letter-spacing:1px;
+    cursor:not-allowed;
+    opacity:.6;
+    transition:all .15s ease;
+  }
+  .reset-btn.active{
+    background:var(--accent);
+    cursor:pointer;
+    opacity:1;
+  }
+  .reset-btn.active:hover{background:#1fb0a0;}
+
+  @media (max-width:640px){
+    body{padding:0; align-items:flex-start;}
+    .app{width:100%;}
+    .title{
+      background:var(--bg);
+      padding:40px 0 44px;
+      margin-bottom:0;
+      font-size:22px;
+      letter-spacing:8px;
+    }
+    .card{
+      flex-direction:column;
+      border-radius:24px 24px 0 0;
+      margin-top:-24px;
+      padding:32px 24px;
+      box-shadow:none;
+      gap:24px;
+    }
+    .right{width:100%; padding:24px;}
+    .field input{font-size:18px; padding:12px 16px 12px 38px;}
+    .tip-btn{font-size:17px; padding:14px 0;}
+    .amount-row .val{font-size:26px;}
+    .amount-row .val .cur{font-size:17px;}
+  }
+</style>
+</head>
+<body>
+  <div class="app">
+    <div class="title">SPLI<br>TTER</div>
+    <div class="card">
+      <div class="left">
+        <div>
+          <label for="bill">Bill</label>
+          <div class="field" id="billField">
+            <span class="icon">$</span>
+            <input id="bill" type="text" inputmode="decimal" placeholder="0">
+          </div>
+        </div>
+
+        <div>
+          <label>Select Tip %</label>
+          <div class="tip-grid" id="tipGrid">
+            <button class="tip-btn" data-tip="5">5%</button>
+            <button class="tip-btn" data-tip="10">10%</button>
+            <button class="tip-btn" data-tip="15">15%</button>
+            <button class="tip-btn" data-tip="25">25%</button>
+            <button class="tip-btn" data-tip="50">50%</button>
+            <div class="tip-btn custom-input" id="customField">
+              <input id="customTip" type="text" inputmode="decimal" placeholder="Custom">
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <label id="peopleLabel" for="people">Number of People</label>
+          <div class="field" id="peopleField">
+            <span class="icon">&#128100;</span>
+            <input id="people" type="text" inputmode="numeric" placeholder="0">
+          </div>
+        </div>
+      </div>
+
+      <div class="right">
+        <div class="amount-row">
+          <div>
+            <div class="lbl-main">Tip Amount</div>
+            <div class="lbl-sub">/ person</div>
+          </div>
+          <div class="val"><span class="cur">$</span><span id="tipVal">0.00</span></div>
+        </div>
+        <div class="amount-row" style="margin-bottom:0;">
+          <div>
+            <div class="lbl-main">Total</div>
+            <div class="lbl-sub">/ person</div>
+          </div>
+          <div class="val"><span class="cur">$</span><span id="totalVal">0.00</span></div>
+        </div>
+        <div class="spacer"></div>
+        <button class="reset-btn" id="resetBtn">RESET</button>
+      </div>
+    </div>
+  </div>
+
+<script>
+  const billInput = document.getElementById('bill');
+  const peopleInput = document.getElementById('people');
+  const customTip = document.getElementById('customTip');
+  const tipGrid = document.getElementById('tipGrid');
+  const customField = document.getElementById('customField');
+  const billField = document.getElementById('billField');
+  const peopleField = document.getElementById('peopleField');
+  const peopleLabel = document.getElementById('peopleLabel');
+  const resetBtn = document.getElementById('resetBtn');
+  const tipVal = document.getElementById('tipVal');
+  const totalVal = document.getElementById('totalVal');
+
+  let activeTip = null;
+
+  function fmt(n){
+    if(!isFinite(n)) n = 0;
+    return n.toFixed(2);
+  }
+
+  function setActiveButton(btn){
+    document.querySelectorAll('.tip-btn').forEach(b=>b.classList.remove('active'));
+    customField.classList.remove('active');
+    if(btn) btn.classList.add('active');
+  }
+
+  function calc(){
+    const bill = parseFloat(billInput.value) || 0;
+    const people = parseInt(peopleInput.value) || 0;
+    const tipPct = activeTip !== null ? activeTip : 0;
+
+    if(people === 0){
+      peopleField.classList.add('error');
+      // peopleLabel.innerHTML = 'Number of People <span class="error-text">Can\\'t be zero</span>';
+    } else {
+      peopleField.classList.remove('error');
+      peopleLabel.textContent = 'Number of People';
+    }
+
+    if(bill > 0 && people > 0){
+      const tipTotal = bill * (tipPct/100);
+      const tipPer = tipTotal / people;
+      const totalPer = (bill + tipTotal) / people;
+      tipVal.textContent = fmt(tipPer);
+      totalVal.textContent = fmt(totalPer);
+    } else {
+      tipVal.textContent = '0.00';
+      totalVal.textContent = '0.00';
+    }
+
+    const canReset = bill > 0 || (people > 0 && people !== '') || tipPct > 0 || customTip.value;
+    resetBtn.classList.toggle('active', !!canReset);
+  }
+
+  tipGrid.querySelectorAll('.tip-btn[data-tip]').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      activeTip = parseFloat(btn.dataset.tip);
+      customTip.value = '';
+      setActiveButton(btn);
+      calc();
+    });
+  });
+
+  customTip.addEventListener('focus', ()=> customField.classList.add('focus'));
+  customTip.addEventListener('blur', ()=> customField.classList.remove('focus'));
+  customTip.addEventListener('input', ()=>{
+    const v = parseFloat(customTip.value);
+    activeTip = isNaN(v) ? 0 : v;
+    setActiveButton(null);
+    customField.classList.add('active');
+    calc();
+  });
+
+  billInput.addEventListener('focus', ()=> billField.classList.add('focus'));
+  billInput.addEventListener('blur', ()=> billField.classList.remove('focus'));
+  billInput.addEventListener('input', ()=>{
+    billInput.value = billInput.value.replace(/[^0-9.]/g,'');
+    calc();
+  });
+
+  peopleInput.addEventListener('focus', ()=> peopleField.classList.add('focus'));
+  peopleInput.addEventListener('blur', ()=> peopleField.classList.remove('focus'));
+  peopleInput.addEventListener('input', ()=>{
+    peopleInput.value = peopleInput.value.replace(/[^0-9]/g,'');
+    calc();
+  });
+
+  resetBtn.addEventListener('click', ()=>{
+    billInput.value = '';
+    peopleInput.value = '';
+    customTip.value = '';
+    activeTip = null;
+    setActiveButton(null);
+    calc();
+  });
+
+  calc();
+</script>
+</body>
+</html>
