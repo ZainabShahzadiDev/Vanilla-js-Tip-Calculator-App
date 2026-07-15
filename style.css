@@ -74,6 +74,10 @@ input {
     font-weight: 700;
 }
 
+.inputData .input-box:focus-within:not(.border-show) {
+    border: 2px solid var(--Green400);
+}
+
 .select-tip .buttons {
     max-width: 100%;
     display: grid;
@@ -100,6 +104,25 @@ input {
     background-color: var(--Grey50);
     font-weight: 700;
     cursor: pointer;
+}
+
+.label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.error {
+    visibility: hidden;
+    color: orange;
+}
+
+.error.show {
+    visibility: visible;
+}
+
+.numberOfPeople .input-box.border-show {
+    border: 2px solid orange;
 }
 
 /* Tip Calculation Section */
@@ -164,10 +187,6 @@ input {
 
 
 /* Animations and transitions */
-
-.inputData .input-box:focus-within {
-    border: 2px solid var(--Green400);
-}
 
 .select-tip .buttons button:hover {
     background-color: var(--Green400);
