@@ -17,35 +17,197 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
+    font-family: "Space Mono", monospace;
     background-color: var(--Grey200);
     min-height: 100vh;
+    min-width: 100vw;
+}
+
+.logo {
+    margin: 2.75rem;
 }
 
 .container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    width: 100%;
+    max-width: 375px;
+    background: white;
+    border-radius: 20px;
+    box-sizing: border-box;
     padding: 1rem;
-    border-radius: 1rem;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    background-color: var(--White);
+}
+
+.inputData {
+    padding: 1rem;
 }
 
 .container h2 {
-    font-family: "Space Mono", monospace;
+    font-size: 1rem;
+    color: var(--Grey500);
+    margin: 0.25rem 0;
 }
 
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
 
+.input-box {
+    transition: border .3s;
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1.25rem;
+    background-color: var(--Grey50);
+    border-radius: 0.5rem;
+}
 
+input {
+    width: 100%;
+    border: none;
+    text-align: right;
+    background-color: transparent;
+    font-size: 1.5rem;
+    outline: none;
+    font-family: inherit;
+    color: var(--Green900);
+    font-weight: 700;
+}
 
+.select-tip .buttons {
+    max-width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem 1rem;
+    margin: 1rem 0;
+}
+
+.select-tip .buttons button {
+    transition: background-color .3s;
+    color: var(--White);
+    background-color: var(--Green900);
+    border: none;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.25rem;
+    font-size: 1.5rem;
+    font-weight: 700;
+    font-family: "Space Mono", monospace;
+    cursor: pointer;
+}
+
+.select-tip .buttons button:last-child {
+    color: var(--Grey500);
+    background-color: var(--Grey50);
+    font-weight: 700;
+    cursor: pointer;
+}
+
+/* Tip Calculation Section */
 
 .tipCalculation {
+    width: 100%;
     background-color: var(--Green900);
+    margin: 1rem 0.5rem;
+    padding: 1.5rem 1.5rem;
+    border-radius: 1rem;
+    box-sizing: border-box;
+}
+
+.tip-data {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0.75rem 0;
+}
+
+.tip-data .headings p {
+    font-size: 0.75rem;
+    color: var(--Grey400);
+    font-weight: 700;
+}
+
+.headings h2 {
+    color: var(--Grey200);
+    font-size: 1rem;
+}
+
+.tip-data .price {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.tip-data .price h2 {
+    font-size: 2rem;
+    color: var(--Green400);
+}
+
+.tip-data .price img {
+    width: 0.75rem;
+    height: auto;
+    color: var(--Green400);
 }
 
 .tipCalculation button {
     color: var(--Green900);
-    background-color:#00474B;
-    opacity: 0.9%;
+    background-color: #00777d;
+    border: none;
+    width: 100%;
+    padding: 0.8rem;
+    font-weight: bold;
+    font-size: 1.1rem;
+    border-radius: 0.25rem;
+    margin-top: 1rem;
+    cursor: pointer;
+}
+
+
+
+/* Animations and transitions */
+
+.inputData .input-box:focus-within {
+    border: 2px solid var(--Green400);
+}
+
+.select-tip .buttons button:hover {
+    background-color: var(--Green400);
+}
+
+
+@media only screen and (min-width:1024px) {
+    .logo {
+        margin-bottom: 6rem;
+        margin-top: 0rem;
+    }
+
+    .container {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        max-width: 900px;
+        padding: 1.25rem 1.5rem;
+        gap: 1rem;
+    }
+
+    .inputData {
+        padding: 1.25rem;
+    }
+
+    .select-tip .buttons {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+
+    .tipCalculation {
+        padding: 2.5rem;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .tip-data .price h2 {
+        font-size: 3rem;
+    }
+
+    .tipCalculation button {
+        margin-top: auto;
+    }
 }
