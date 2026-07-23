@@ -1,146 +1,232 @@
-*,
-*::before,
-*::after {
+* {
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
-}
-
-@font-face {
-    font-family: "Work Sans";
-    src: url("./assets/fonts/WorkSans-VariableFont_wght.ttf") format("truetype");
-    font-weight: 100 900;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: "Work Sans";
-    src: url("./assets/fonts/WorkSans-Italic-VariableFont_wght.ttf") format("truetype");
-    font-weight: 100 900;
-    font-style: italic;
 }
 
 :root {
+    --Green400: hsl(172, 67%, 45%);
+    --Green900: hsl(183, 100%, 15%);
+    --Grey500: hsl(186, 14%, 43%);
+    --Grey400: hsl(184, 14%, 56%);
+    --Grey200: hsl(185, 41%, 84%);
+    --Grey50: hsl(189, 47%, 97%);
     --White: hsl(0, 100%, 100%);
-    --Purple100: hsl(275, 100%, 97%);
-    --Purple600: hsl(292, 16%, 49%);
-    --Purple950: hsl(292, 42%, 14%);
 }
 
 body {
-    font-family: "Work Sans", sans-serif;
-    background-image: url("assets/images/background-pattern-mobile.svg");
-    background-repeat: no-repeat;
-    background-size: 100% auto;
-    background-position: top;
-    background-color: var(--Purple600);
-}
-
-main {
-    min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
+    font-family: "Space Mono", monospace;
+    background-color: var(--Grey200);
+    min-height: 100vh;
+    min-width: 100vw;
+}
 
+.logo {
+    margin: 2.75rem;
 }
 
 .container {
-    width: 87.2%;
-    max-width: 327px;
-    background-color: var(--White);
-    padding: 1.5rem;
-    border-radius: 0.75rem;
-    margin-bottom: 2rem;
-    margin-top: 0.375rem;
+    width: 100%;
+    max-width: 375px;
+    background: white;
+    border-radius: 20px;
+    box-sizing: border-box;
+    padding: 1rem;
 }
 
-.logo-heading {
+.inputData {
+    padding: 1rem;
+}
+
+.container h2 {
+    font-size: 1rem;
+    color: var(--Grey500);
+    margin: 0.25rem 0;
+}
+
+form {
     display: flex;
-    gap: 1.31rem;
-    margin-bottom: 1.375rem;
+    flex-direction: column;
+    gap: 1rem;
 }
 
-.logo-heading img {
-    height: 2.19rem;
-    width: auto;
+.input-box {
+    transition: border .3s;
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1.25rem;
+    background-color: var(--Grey50);
+    border-radius: 0.5rem;
 }
 
-.logo-heading h1 {
-    font-size: 2rem;
+input {
+    width: 100%;
+    border: none;
+    text-align: right;
+    background-color: transparent;
+    font-size: 1.5rem;
+    outline: none;
+    font-family: inherit;
+    color: var(--Green900);
+    font-weight: 700;
 }
 
-h2,
-p {
-    font-size: 1.06rem;
-    font-weight: 600;
+.inputData .input-box:focus-within:not(.border-show) {
+    border: 2px solid var(--Green400);
 }
 
-h2 {
-    color: var(--Purple950);
+.select-tip .buttons {
+    max-width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem 1rem;
+    margin: 1rem 0;
 }
 
-p {
-    color: var(--Purple600);
+.select-tip .buttons button {
+    transition: background-color .3s;
+    color: var(--White);
+    background-color: var(--Green900);
+    border: none;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.25rem;
+    font-size: 1.5rem;
+    font-weight: 700;
+    font-family: "Space Mono", monospace;
+    cursor: pointer;
 }
 
-.accordian-item {
-    margin: 0.625rem 0rem;
+.select-tip .buttons button:last-child {
+    color: var(--Grey500);
+    background-color: var(--Grey50);
+    font-weight: 700;
+    cursor: pointer;
 }
 
-.accordian-item:not(:last-child) {
-    border-bottom: 3px solid var(--Purple100);
-    margin: 0.19rem 0rem;
-}
-
-.accordian-question {
+.label {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    transition: color 0.3s;
 }
 
-.accordian-answer {
-    margin: 0.75rem 0rem 0.44rem;
-    display: none;
+.error {
+    visibility: hidden;
+    color: orange;
 }
 
-.accordian-answer.show {
-    display: block;
+.error.show {
+    visibility: visible;
 }
 
+.numberOfPeople .input-box.border-show {
+    border: 2px solid orange;
+}
 
-/* Transitions & animations */
+/* Tip Calculation Section */
 
-.accordian-question:hover {
-    color: var(--Purple950);
+.tipCalculation {
+    width: 100%;
+    background-color: var(--Green900);
+    margin: 1rem 0.5rem;
+    padding: 1.5rem 1.5rem;
+    border-radius: 1rem;
+    box-sizing: border-box;
+}
+
+.tip-data {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0.75rem 0;
+}
+
+.tip-data .headings p {
+    font-size: 0.75rem;
+    color: var(--Grey400);
+    font-weight: 700;
+}
+
+.headings h2 {
+    color: var(--Grey200);
+    font-size: 1rem;
+}
+
+.tip-data .price {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.tip-data .price h2 {
+    font-size: 2rem;
+    color: var(--Green400);
+}
+
+.tip-data .price img {
+    width: 0.75rem;
+    height: auto;
+    color: var(--Green400);
+}
+
+.tipCalculation button {
+    color: var(--Green900);
+    background-color: #00777d;
+    border: none;
+    width: 100%;
+    padding: 0.8rem;
+    font-weight: bold;
+    font-size: 1.1rem;
+    border-radius: 0.25rem;
+    margin-top: 1rem;
     cursor: pointer;
 }
 
 
-/* Media Queries */
 
+/* Animations and transitions */
 
-@media only screen and (min-width: 786px) {
-    .container {
-        width: 83.85%;
-        max-width: 644px;
-    }
+.select-tip .buttons button:hover {
+    background-color: var(--Green400);
 }
 
-@media only screen and (min-width: 1024px) {
-    body {
-        background-image: url(assets/images/background-pattern-desktop.svg);
+
+@media only screen and (min-width:1024px) {
+    .logo {
+        margin-bottom: 6rem;
+        margin-top: 0rem;
     }
 
     .container {
-        width: 68.89%;
-        max-width: 992px;
-        padding: 3.52rem 4.06rem;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        max-width: 900px;
+        padding: 1.25rem 1.5rem;
+        gap: 1rem;
     }
 
-    h2,
-    p {
-        font-size: 1.25rem;
-        padding: 0.625rem 0rem;
+    .inputData {
+        padding: 1.25rem;
+    }
+
+    .select-tip .buttons {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+
+    .tipCalculation {
+        padding: 2.5rem;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .tip-data .price h2 {
+        font-size: 3rem;
+    }
+
+    .tipCalculation button {
+        margin-top: auto;
     }
 }
